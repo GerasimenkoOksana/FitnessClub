@@ -1,15 +1,25 @@
 ﻿@model IEnumerable<FitnessClub.Data.Entities.ProjectUser>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Admin Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>Admin Account Index</h1>
 <h1>страница для работы с пользователями и ролями</h1>
 
+<style>
+    .avatar {
+        width: 75px;
+        border-radius: 50%;
+        border: 2px solid #808080;
+    }
+</style>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Avatar)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
@@ -21,16 +31,23 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @{ 
+                        if (item.Avatar == null)
+                            item.Avatar = ViewBag.defaultAvatar;
+                    }
+                    <img src="@item.Avatar" class="avatar" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                </td>
+
+                <td>
+                </td>
+            </tr>
         }
+    </tbody>
+</table>
