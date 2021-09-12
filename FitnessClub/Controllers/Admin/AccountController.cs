@@ -18,13 +18,19 @@ namespace FitnessClub.Controllers.Admin
     public class AccountController : Controller
     {
         #region Roles
-        public IActionResult RoleIndex()
+        public async Task<IActionResult> RoleIndex()
         {
+            var currentUser =await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserName"] = currentUser.UserName;
+            ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             return View("~/Views/Admin/Account/RoleIndex.cshtml", _roleManager.Roles.ToList());
         }
 
-        public IActionResult RoleCreate()
+        public async Task<IActionResult> RoleCreate()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserName"] = currentUser.UserName;
+            ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             return View("~/Views/Admin/Account/RoleCreate.cshtml");
         }
 
@@ -46,6 +52,9 @@ namespace FitnessClub.Controllers.Admin
                     }
                 }
             }
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserName"] = currentUser.UserName;
+            ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             return View(name);
         }
         #endregion
@@ -55,6 +64,32 @@ namespace FitnessClub.Controllers.Admin
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Id")]
+            public string Id { get; set; }
+
+            [Required]
+            [Display(Name = "UserName")]
+            public string UserName { get; set; }
+
+            [Required]
+            [Display(Name = "FullName")]
+            public string Name { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Birthday")]
+            public DateTime Birthday { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Day of registraton")]
+            public DateTime Moment { get; set; }
+
+            [Required]            
+            [Display(Name = "Sex")]
+            public Sex Sex { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -85,14 +120,20 @@ namespace FitnessClub.Controllers.Admin
         }
 
         #region Users
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.defaultAvatar = "\\storage\\avatars\\unnamed.jpg";
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserName"] = currentUser.UserName;
+            ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             return View("~/Views/Admin/Account/Index.cshtml", _userManager.Users);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserName"] = currentUser.UserName;
+            ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             ViewBag.allRoles = new SelectList(_roleManager.Roles.ToList(), "Name", "Name");
             return View("~/Views/Admin/Account/Create.cshtml");
         }
@@ -128,6 +169,9 @@ namespace FitnessClub.Controllers.Admin
                     }
                 }
             }
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewData["CurrentUserName"] = currentUser.UserName;
+            ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             return View("~/Views/Admin/Account/Create.cshtml");
         }
         #endregion

@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FitnessClub.Controllers.Admin
 {
-    [Authorize]
+    [Authorize]  //(Roles ="admin")
     public class AdminDashboardController : Controller
     {
         private readonly UserManager<ProjectUser> _userManager;
@@ -31,7 +31,8 @@ namespace FitnessClub.Controllers.Admin
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);
-
+            ViewData["CurrentUserName"] = currentUser.UserName;
+            ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             return View("~/Views/Admin/Index.cshtml");
         }
     }

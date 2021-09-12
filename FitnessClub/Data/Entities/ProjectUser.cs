@@ -14,8 +14,7 @@ namespace FitnessClub.Data.Entities
         public DateTime Moment { get; set; } //дата регистрации
         public Sex Sex { get; set; }
         public string Avatar { get; set; }
-        List<Training>TrainingsClient { get; set; } //тренировки как клиента
-
+        List<Training>TrainingsClient { get; set; } //тренировки как клиента       
         List<Training> TrainingsTrainer { get; set; } //тренировки как тренера - доступно для роли тренер
         List<Sport> Sports { get; set; }  //виды спорта, которые может вести тренер - доступно для роли тренер
         List<Time> FreeTimeTable { get; set; } //доступное время у тренера - доступно для роли тренер
