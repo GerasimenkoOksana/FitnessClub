@@ -11,12 +11,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using FitnessClub.Data;
 
 namespace FitnessClub.Controllers.Admin
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly ApplicationDbContext _context;
         #region Roles
         public async Task<IActionResult> RoleIndex()
         {
@@ -174,6 +176,34 @@ namespace FitnessClub.Controllers.Admin
             ViewData["CurrentUserAvatar"] = currentUser.Avatar;
             return View("~/Views/Admin/Account/Create.cshtml");
         }
+
+        // GET: Sports/Delete/5
+        public async Task<IActionResult> Delete(string? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.FindByIdAsync(id);               
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View("~/Views/Admin/Account/Delete.cshtml",user);
+        }
+
+        // POST: Sports/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            await _userManager.DeleteAsync(user);
+          //  await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        
         #endregion
     }
 }
