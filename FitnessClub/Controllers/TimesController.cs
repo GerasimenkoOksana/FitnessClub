@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FitnessClub.Data;
 using FitnessClub.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FitnessClub.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TimesController : Controller
     {
         private readonly ApplicationDbContext _context;

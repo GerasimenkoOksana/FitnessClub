@@ -15,7 +15,7 @@ using FitnessClub.Data;
 
 namespace FitnessClub.Controllers.Admin
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;

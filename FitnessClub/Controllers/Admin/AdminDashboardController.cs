@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FitnessClub.Controllers.Admin
 {
-    [Authorize]  //(Roles ="admin")
+    [Authorize(Roles = "Admin")]
     public class AdminDashboardController : Controller
     {
         private readonly UserManager<ProjectUser> _userManager;
